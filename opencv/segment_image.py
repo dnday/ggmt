@@ -22,23 +22,23 @@ img = cv2.resize(img, (640, 480))
 
 # Membuat Jendela Kontrol (Trackbar)
 cv2.namedWindow("Pengaturan Warna")
-cv2.resizeWindow("Pengaturan Warna", 640, 500)
+cv2.resizeWindow("Pengaturan Warna", 1000, 600)
 
-# Trackbar untuk MERAH
-cv2.createTrackbar("Merah Hue Min", "Pengaturan Warna", 0, 179, empty)
-cv2.createTrackbar("Merah Hue Max", "Pengaturan Warna", 10, 179, empty)
-cv2.createTrackbar("Merah Sat Min", "Pengaturan Warna", 100, 255, empty)
-cv2.createTrackbar("Merah Sat Max", "Pengaturan Warna", 255, 255, empty)
-cv2.createTrackbar("Merah Val Min", "Pengaturan Warna", 100, 255, empty)
-cv2.createTrackbar("Merah Val Max", "Pengaturan Warna", 255, 255, empty)
+# Trackbar untuk MERAH (Default User: HSV[8, 224, 106])
+cv2.createTrackbar("R H Min", "Pengaturan Warna", 0, 179, empty)
+cv2.createTrackbar("R H Max", "Pengaturan Warna", 18, 179, empty)
+cv2.createTrackbar("R S Min", "Pengaturan Warna", 184, 255, empty)
+cv2.createTrackbar("R S Max", "Pengaturan Warna", 255, 255, empty)
+cv2.createTrackbar("R V Min", "Pengaturan Warna", 66, 255, empty)
+cv2.createTrackbar("R V Max", "Pengaturan Warna", 255, 255, empty)
 
-# Trackbar untuk HIJAU
-cv2.createTrackbar("Hijau Hue Min", "Pengaturan Warna", 40, 179, empty)
-cv2.createTrackbar("Hijau Hue Max", "Pengaturan Warna", 80, 179, empty)
-cv2.createTrackbar("Hijau Sat Min", "Pengaturan Warna", 40, 255, empty)
-cv2.createTrackbar("Hijau Sat Max", "Pengaturan Warna", 255, 255, empty)
-cv2.createTrackbar("Hijau Val Min", "Pengaturan Warna", 40, 255, empty)
-cv2.createTrackbar("Hijau Val Max", "Pengaturan Warna", 255, 255, empty)
+# Trackbar untuk HIJAU (Default User: HSV[89, 250, 54])
+cv2.createTrackbar("G H Min", "Pengaturan Warna", 79, 179, empty)
+cv2.createTrackbar("G H Max", "Pengaturan Warna", 99, 179, empty)
+cv2.createTrackbar("G S Min", "Pengaturan Warna", 210, 255, empty)
+cv2.createTrackbar("G S Max", "Pengaturan Warna", 255, 255, empty)
+cv2.createTrackbar("G V Min", "Pengaturan Warna", 14, 255, empty)
+cv2.createTrackbar("G V Max", "Pengaturan Warna", 255, 255, empty)
 
 print("Program Berjalan. Tekan 'q' pada keyboard untuk keluar.")
 
@@ -48,20 +48,20 @@ while True:
     imgHSV = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     
     # 2. Baca posisi slider MERAH
-    r_h_min = cv2.getTrackbarPos("Merah Hue Min", "Pengaturan Warna")
-    r_h_max = cv2.getTrackbarPos("Merah Hue Max", "Pengaturan Warna")
-    r_s_min = cv2.getTrackbarPos("Merah Sat Min", "Pengaturan Warna")
-    r_s_max = cv2.getTrackbarPos("Merah Sat Max", "Pengaturan Warna")
-    r_v_min = cv2.getTrackbarPos("Merah Val Min", "Pengaturan Warna")
-    r_v_max = cv2.getTrackbarPos("Merah Val Max", "Pengaturan Warna")
+    r_h_min = cv2.getTrackbarPos("R H Min", "Pengaturan Warna")
+    r_h_max = cv2.getTrackbarPos("R H Max", "Pengaturan Warna")
+    r_s_min = cv2.getTrackbarPos("R S Min", "Pengaturan Warna")
+    r_s_max = cv2.getTrackbarPos("R S Max", "Pengaturan Warna")
+    r_v_min = cv2.getTrackbarPos("R V Min", "Pengaturan Warna")
+    r_v_max = cv2.getTrackbarPos("R V Max", "Pengaturan Warna")
 
     # 3. Baca posisi slider HIJAU
-    g_h_min = cv2.getTrackbarPos("Hijau Hue Min", "Pengaturan Warna")
-    g_h_max = cv2.getTrackbarPos("Hijau Hue Max", "Pengaturan Warna")
-    g_s_min = cv2.getTrackbarPos("Hijau Sat Min", "Pengaturan Warna")
-    g_s_max = cv2.getTrackbarPos("Hijau Sat Max", "Pengaturan Warna")
-    g_v_min = cv2.getTrackbarPos("Hijau Val Min", "Pengaturan Warna")
-    g_v_max = cv2.getTrackbarPos("Hijau Val Max", "Pengaturan Warna")
+    g_h_min = cv2.getTrackbarPos("G H Min", "Pengaturan Warna")
+    g_h_max = cv2.getTrackbarPos("G H Max", "Pengaturan Warna")
+    g_s_min = cv2.getTrackbarPos("G S Min", "Pengaturan Warna")
+    g_s_max = cv2.getTrackbarPos("G S Max", "Pengaturan Warna")
+    g_v_min = cv2.getTrackbarPos("G V Min", "Pengaturan Warna")
+    g_v_max = cv2.getTrackbarPos("G V Max", "Pengaturan Warna")
     
     # 4. Buat Masking Merah
     lower_red = np.array([r_h_min, r_s_min, r_v_min])

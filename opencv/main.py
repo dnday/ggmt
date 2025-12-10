@@ -30,10 +30,13 @@ print("Program Berjalan. Tekan 'q' pada keyboard untuk keluar.")
 
 # --- BAGIAN 2: LOOP UTAMA (Looping terus menerus) ---
 while True:
-    # 1. Konversi gambar ke HSV
-    imgHSV = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    # 1. Pre-processing: Gaussian Blur (Haluskan citra)
+    blurred = cv2.GaussianBlur(img, (11, 11), 0)
     
-    # 2. Baca posisi slider saat ini
+    # 2. Konversi gambar ke HSV
+    imgHSV = cv2.cvtColor(blurred, cv2.COLOR_BGR2HSV)
+    
+    # 3. Baca posisi slider saat ini
     h_min = cv2.getTrackbarPos("Hue Min", "Pengaturan Warna")
     h_max = cv2.getTrackbarPos("Hue Max", "Pengaturan Warna")
     s_min = cv2.getTrackbarPos("Sat Min", "Pengaturan Warna")
@@ -41,12 +44,17 @@ while True:
     v_min = cv2.getTrackbarPos("Val Min", "Pengaturan Warna")
     v_max = cv2.getTrackbarPos("Val Max", "Pengaturan Warna")
     
-    # 3. Buat Masking (Filter warna)
+    # 4. Buat Masking (Filter warna)
     lower = np.array([h_min, s_min, v_min])
     upper = np.array([h_max, s_max, v_max])
     mask = cv2.inRange(imgHSV, lower, upper)
     
-    # 4. Tampilkan hasil (Warna asli ditimpa mask)
+    # 5. Operasi Morfologi (Hilangkan Noise)
+    kernel = np.ones((7, 7), np.uint8)
+    mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
+    mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
+    
+    # 6. Tampilkan hasil (Warna asli ditimpa mask)
     imgResult = cv2.bitwise_and(img, img, mask=mask)
     
     # Resize agar muat di layar laptop (Opsional)
@@ -57,7 +65,7 @@ while True:
     stack = np.hstack([imgSmall, resSmall])
     cv2.imshow("Kiri: Asli | Kanan: Deteksi", stack)
     
-    # 5. Tombol Keluar
+    # 7. Tombol Keluar
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
