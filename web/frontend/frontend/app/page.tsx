@@ -1,7 +1,8 @@
 "use client";
 
-import { Activity, Battery, Gauge, MapPin, Navigation, Trash2 } from "lucide-react";
+import { Activity, Battery, Camera, Gauge, MapPin, Navigation, Trash2 } from "lucide-react";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 // Dynamically import Map to avoid SSR issues
@@ -203,8 +204,8 @@ export default function Home() {
               >
                 Stop / Idle
               </button>
-               <button 
-                 onClick={() => fetch('http://localhost:5000/api/command', {
+              <button 
+                onClick={() => fetch('http://localhost:5000/api/command', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({ command: 'RTH' })
@@ -213,6 +214,13 @@ export default function Home() {
               >
                 Return to Home
               </button>
+              
+              <Link 
+                href="/camera"
+                className="py-3 px-4 bg-zinc-800 hover:bg-zinc-700 text-purple-400 rounded-xl font-medium transition-all active:scale-95 text-center flex items-center justify-center gap-2"
+              >
+                <Camera className="h-4 w-4" /> View Camera
+              </Link>
             </div>
             <p className="text-xs text-zinc-500 mt-4 text-center">
                 Click map to add waypoints
