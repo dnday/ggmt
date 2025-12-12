@@ -138,17 +138,22 @@ while True:
     g_v_max = cv2.getTrackbarPos("G V Max", "Pengaturan Warna")
     
     # 5. Buat Masking Merah (Handle Wrap-Around)
+    # Jika nilai H_min lebih besar dari H_max, berarti rentang warna merah melintasi batas 0/179 (wrap-around)
     if r_h_min > r_h_max:
+        # Bagian pertama dari rentang merah (dari H_min sampai 179)
         lower_red1 = np.array([r_h_min, r_s_min, r_v_min])
         upper_red1 = np.array([179, r_s_max, r_v_max])
         mask_red1 = cv2.inRange(imgHSV, lower_red1, upper_red1)
         
+        # Bagian kedua dari rentang merah (dari 0 sampai H_max)
         lower_red2 = np.array([0, r_s_min, r_v_min])
         upper_red2 = np.array([r_h_max, r_s_max, r_v_max])
         mask_red2 = cv2.inRange(imgHSV, lower_red2, upper_red2)
         
+        # Gabungkan kedua mask untuk mendapatkan mask merah yang lengkap
         mask_red = cv2.bitwise_or(mask_red1, mask_red2)
     else:
+        # Jika tidak ada wrap-around, buat mask merah dengan rentang tunggal
         lower_red = np.array([r_h_min, r_s_min, r_v_min])
         upper_red = np.array([r_h_max, r_s_max, r_v_max])
         mask_red = cv2.inRange(imgHSV, lower_red, upper_red)
